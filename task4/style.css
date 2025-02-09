@@ -1,0 +1,20 @@
+body {
+    text-align: center;
+}
+
+.block {
+    width: 500px;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px auto;
+    position: relative;
+}
+textarea {
+    text-align: center;
+}
+button {
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
