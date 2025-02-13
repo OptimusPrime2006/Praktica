@@ -4,23 +4,19 @@ let selectedColors = [];
 
 colors.forEach(color => {
     color.addEventListener('click', () => {
-        const colorValue = color.style.backgroundColor;
+        const colorValue = color.dataset.color;
         const index = selectedColors.indexOf(colorValue);
 
         if (index > -1) {
             selectedColors.splice(index, 1);
-            color.classList.remove('selected');
         } else {
             selectedColors.push(colorValue);
-            color.classList.add('selected');
         }
+        
+        color.classList.toggle('selected');
 
-        if (selectedColors.length > 0) {
-            rectangle.style.background = selectedColors.length > 1
-                ? `linear-gradient(${selectedColors.join(', ')})`
-                : selectedColors[0];
-        } else {
-            rectangle.style.background = 'white';
-        }
+        rectangle.style.background = selectedColors.length > 1
+            ? `linear-gradient(to right, ${selectedColors.join(', ')})`
+            : selectedColors[0] || 'white';
     });
 });
