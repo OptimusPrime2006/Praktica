@@ -3,31 +3,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     blocksContainer.addEventListener('click', (event) => {
         const target = event.target;
+        const block = target.closest('.block');
+
+        if (!block) return;
 
         if (target.classList.contains('deleteButton')) {
-            const block = target.parentElement;
-            blocksContainer.removeChild(block);
+            block.remove();
         }
 
         if (target.classList.contains('editButton')) {
-            const block = target.parentElement;
-            const textElement = block.querySelector('.text');
+            let textElement = block.querySelector('.text');
 
-            if (textElement.tagName === 'TEXTAREA') {
-                const newText = textElement.value;
-                textElement.replaceWith(createTextElement(newText));
-            } else {
-                const currentText = textElement.textContent;
-                const textarea = document.createElement('textarea');
-                textarea.value = currentText;
-                textarea.addEventListener('blur', () => {
-                    const newText = textarea.value;
-                    textarea.replaceWith(createTextElement(newText));
-                });
-                block.insertBefore(textarea, textElement);
-                textElement.style.display = 'none'; // Сховати оригінальний текст
-                textarea.focus();
+            if (textElement && textElement.tagName.toUpperCase() === 'TEXTAREA') {
+                return;
             }
+
+            const currentText = textElement.textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = currentText;
+            textarea.className = 'text';
+            textarea.addEventListener('blur', () => {
+                textElement = createTextElement(textarea.value);
+                textarea.replaceWith(textElement);
+            });
+
+            textElement.replaceWith(textarea);
+            textarea.focus();
+            textarea.select();
         }
     });
 
